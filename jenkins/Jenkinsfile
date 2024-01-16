@@ -12,8 +12,8 @@ node{
             junit 'test-reports/results.xml'
         }
     }
-}
-    node('ec2-agent') {
+//}
+    //node('ec2-agent') {
         docker.image('cdrx/pyinstaller-linux:python2').inside{
             def VOLUME = "${pwd()}/sources:/src"
             def BUILD_ID = env.BUILD_ID
@@ -27,5 +27,5 @@ node{
                 archiveArtifacts "${BUILD_ID}/sources/dist/add2vals"
             }
         }
-    }
+}
 
