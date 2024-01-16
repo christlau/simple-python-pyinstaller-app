@@ -31,7 +31,7 @@ pipeline {
             }
         }
         stage('Deliver') { 
-            agent any
+            agent('ec2-label'){
             environment { 
                 VOLUME = '$(pwd)/sources:/src'
                 IMAGE = 'cdrx/pyinstaller-linux:python2'
@@ -48,6 +48,7 @@ pipeline {
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
                 }
             }
+        }
         }
     }
 }
