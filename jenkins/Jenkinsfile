@@ -31,7 +31,7 @@ pipeline {
             }
         }
         stage('Deliver') { 
-            agent('ec2-label'){
+            agent('ec2-user'){
             environment { 
                 VOLUME = '$(pwd)/sources:/src'
                 IMAGE = 'cdrx/pyinstaller-linux:python2'
