@@ -1,4 +1,4 @@
-node {
+node('Built-In Node') {
     docker.image('python:2-alpine').inside('-p 3000:3000') {
         stage('Build') {
             checkout scm
@@ -12,13 +12,14 @@ node {
             junit 'test-reports/results.xml'
         }
     }
-    
+}
     node('ec2-agent') {
         docker.image('cdrx/pyinstaller-linux:python2').inside{
             def VOLUME = "${pwd()}/sources:/src"
             def BUILD_ID = env.BUILD_ID
             def IMAGE = IMAGE_PYINSTALLER
             stage('Deploy') {
+                unstash('compiled-results')
                 sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
             }
             stage('Post-Deploy') {
@@ -27,4 +28,4 @@ node {
             }
         }
     }
-}
+
