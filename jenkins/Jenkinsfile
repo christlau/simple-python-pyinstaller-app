@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') { 
+        stage('Deploy') { 
             agent{label 'ec2-label'}
             environment { 
                 VOLUME = '$(pwd)/sources:/src'
@@ -38,6 +38,7 @@ pipeline {
             }
             steps {
                 dir(path: env.BUILD_ID) { 
+                    checkout scm
                     unstash(name: 'compiled-results') 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
