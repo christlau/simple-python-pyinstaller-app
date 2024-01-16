@@ -32,11 +32,8 @@ pipeline {
         }
         stage('Manual Approval'){
             input {
-                message "Lanjutkan ke tahap Deploy?"
-            }
-            steps {
-                sh 'echo "Deploy ke AWS"'
-
+                message 'Lanjutkan ke tahap Deploy?'
+                ok 'Proceed'
             }
         }
         stage('Deploy'){ 
