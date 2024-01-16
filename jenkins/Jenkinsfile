@@ -31,12 +31,15 @@ pipeline {
             }
         }
         stage('Manual Approval'){
-            steps {
-                input {
-                    message 'Lanjutkan ke tahap Deploy?'
-                    ok 'Proceed'
-                }
+            input {
+                message "Lanjutkan ke tahap Deploy?"
             }
+            steps {
+                sh 'echo "Deploy ke AWS"'
+
+            }
+        }
+            
         }
         stage('Deploy'){ 
             agent{label 'ec2-label'}
