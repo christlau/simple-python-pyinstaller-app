@@ -30,6 +30,9 @@ pipeline {
                 }
             }
         }
+        stage('Manual Approval')  {
+            input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed'     
+        }
         stage('Deploy') { 
             agent{label 'ec2-label'}
             environment { 
@@ -41,6 +44,7 @@ pipeline {
                     checkout scm
                     unstash(name: 'compiled-results') 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
+                    sh "sleep 60"
                 }
             }
             post {
