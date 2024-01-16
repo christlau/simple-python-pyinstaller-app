@@ -30,10 +30,15 @@ pipeline {
                 }
             }
         }
-        stage('Manual Approval')  {
-            input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed'     
+        stage('Manual Approval'){
+            steps {
+                input {
+                    message 'Lanjutkan ke tahap Deploy?'
+                    ok 'Proceed'
+                }
+            }
         }
-        stage('Deploy') { 
+        stage('Deploy'){ 
             agent{label 'ec2-label'}
             environment { 
                 VOLUME = '$(pwd)/sources:/src'
