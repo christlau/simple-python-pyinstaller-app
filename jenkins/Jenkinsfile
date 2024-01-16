@@ -31,10 +31,13 @@ pipeline {
             }
         }
         stage('Manual Approval'){
-            input {
-                message 'Lanjutkan ke tahap Deploy?'
-                ok 'Proceed'
+            node{
+                input {
+                    message 'Lanjutkan ke tahap Deploy?'
+                    ok 'Proceed'
+                }
             }
+            
         }
         stage('Deploy'){ 
             agent{label 'ec2-label'}
