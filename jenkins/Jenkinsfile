@@ -1,10 +1,10 @@
 pipeline {
     agent none
-    options {
+    options{
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Build') {
+        stage('Build'){
             agent {
                 docker {
                     image 'python:3.12.1-alpine3.19'
@@ -15,7 +15,7 @@ pipeline {
                 stash(name: 'compiled-results', includes: 'sources/*.py*')
             }
         }
-        stage('Test') {
+        stage('Test'){
             agent {
                 docker {
                     image 'qnib/pytest'
@@ -39,8 +39,6 @@ pipeline {
 
             }
         }
-            
-        }
         stage('Deploy'){ 
             agent{label 'ec2-label'}
             environment { 
@@ -52,7 +50,7 @@ pipeline {
                     checkout scm
                     unstash(name: 'compiled-results') 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
-                    sh "sleep 60"
+                    sh 'sleep 60'
                 }
             }
             post {
