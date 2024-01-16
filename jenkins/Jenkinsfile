@@ -33,9 +33,7 @@ pipeline {
         stage('Manual Approval'){
             agent none
                 steps {
-                    input {
-                        message 'Lanjutkan ke tahap Deploy?'
-                    } 
+                     input message: 'Lanjutkan ke tahap Deploy?', ok: 'proceed' 
                 }
         }
         stage('Deploy'){ 
